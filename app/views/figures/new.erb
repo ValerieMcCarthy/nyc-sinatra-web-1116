@@ -1,0 +1,35 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta charset="UTF-8">
+    <title>Figure Input Page</title>
+  </head>
+  <body>
+ 
+ <center><h1> Create a new figure </h1></center>
+
+  <form method="POST" action="/figures">
+  <p> Figure Name: <input id="name" type="text" name="figure[name]"></p>
+  <%@all_landmarks.each do |landmark| %>
+      <input type="checkbox" name="<%=landmark.name%>" value="landmark"> <%=landmark.name%><br>
+  <% end %>
+
+  <p>Or enter in new landmark information:</p>
+       <p>New landmark: <input id="landmark_name" type="text" name="landmark.name"></p>
+       <p>Year Completed: <input id="landmark_year_completed" type="text" name="landmark.year_completed"></p>
+
+    <%@all_titles.each do |title| %>
+      <input type="checkbox" name="<%=title.name%>" value="title"> <%=title.name%><br>
+    <% end %>   
+
+
+      <p>Or enter in new title information:</p>
+       <p>New title: <input id="title" type="text" name="title.name"></p>
+
+  <input type="submit" name="Submit" value="submit"></form>
+
+
+
+
+  </body>
+</html>
