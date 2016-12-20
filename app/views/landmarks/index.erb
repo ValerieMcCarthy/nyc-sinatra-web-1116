@@ -7,7 +7,18 @@
   <body>
     <center><h1>Welcome to Our New York Landmark List</h1></center>
 
-    <center><a href = "/figures/new"> Click here to enter a new figure </a></center>
+     <ul>
+      <% @landmarks.each do |landmark| %>
+        <li>
+          <a href="/landmarks/<%=landmark.id %>"><%= landmark.name %></a>
+          <a href="/landmarks/<%=landmark.id %>"><%= landmark.year_completed %></a>
+        </li>
+      <% end %>
+    </ul>
+
+
+    <center><a href = "/landmark/new"> Click here to enter a new landmark </a></center>
   
   </body>
 </html>
+

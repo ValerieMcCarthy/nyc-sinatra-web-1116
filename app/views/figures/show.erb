@@ -6,10 +6,38 @@
   </head>
   <body>
  
- <center><h1> Landmark Show</h1></center>
+ <center><h1> Show Figure Page</h1></center>
+
+<p> <%= @figure.name %> </p>
+ <h2>Figure titles:</h2>
+
+    <ul>
+      <% if @figure.titles %>
+        <% @figure.titles.each do |title| %>
+          <li><%= title.name %></li>
+        <% end %>
+      <% end %>
+    </ul>
+
+    <h2>Figure landmarks:</h2>
+    <ul>
+      <% if @figure.landmarks %>
+        <% @figure.landmarks.each do |landmark| %>
+          <li><%= landmark.name %></li>
+          <li><%=landmark.year_completed%></li>
+        <% end %>
+      <% end %>
+    </ul> 
+
+
+    <p></p>
+
+    <center><a href = '/figures/<%=@figure.id%>/edit'> Click here to edit figure </a>
+    <p></p>
 
 
 
+    <center><a href = '/figures'> Click here to return to figure list </a>
 
   </body>
 </html>

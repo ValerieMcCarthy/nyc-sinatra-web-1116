@@ -1,17 +1,81 @@
 class FiguresController < ApplicationController
 
 	get '/figures/new' do
-		@all_landmarks = Landmark.all
-		@all_titles = Title.all
+		@landmarks = Landmark.all
+		@titles = Title.all
 		erb :'/figures/new'
 	end
 
 	post '/figures' do
-		@figure = Figure.create(name: params[:figure][:name])
-		@title = Title.find_or_create_by(name: params[:title][:name])
-		@landmark = Landmark.find_or_create_by(name: params[:landmark][:name], figure_id: @figure.id, year_completed: params[:landmark][:year_completed])
-		@figure_title = FigureTitle.new(title_id: @title.id, figure_id: @figure_id)
-		erb :'figures/show'
+		@figure = Figure.new
+	    @figure.name = params['figure']['name']
+	   
+	   	if params['title']['name'] != ""
+	    	@title=Title.create(name: params['title']['name'])
+	    	@figure.title_ids = @title.id
+	    else
+	    	@figure.title_ids = params["figure"]["title_ids"]
+	    end
+
+	    if params['landmark']['name'] != ""
+	    	@landmark=Landmark.create(name: params['landmark']['name'], year_completed: params['landmark']['year_completed'])
+	    	@figure.landmark_ids = @landmark.id
+	    else
+	    	@figure.landmark_ids = params["figure"]["landmark_ids"]
+		end	
+		@figure.save
+	
+		#redirect '/figures'
+	    redirect "/figures/#{@figure.id}"
 	end
+
+	patch '/figures/:id' do
+
+		@figure = Figure.find(params[:id])
+    	@figure.name = params['figure']['name']
+    	
+    	if params['title']['name'] != ""
+	    	@title=Title.create(name: params['title']['name'])
+	    	@figure.title_ids = @title.id
+	    else
+	    	@figure.title_ids = params["figure"]["title_ids"]
+	    end
+	    
+
+	    if params['landmark']['name'] != ""
+	    	@landmark=Landmark.create(name: params['landmark']['name'], year_completed: params['landmark']['year_completed'])
+	    	@figure.landmark_ids = @landmark.id
+	    else
+	    	@figure.landmark_ids = params["figure"]["landmark_ids"]
+		end	
+
+    	@figure.save
+		redirect "/figures/#{@figure.id}"
+
+	end
+
+
+	get '/figures' do
+		@figures = Figure.all
+		erb :'/figures/index'
+	end
+
+	get '/figures/:id' do
+		@figure = Figure.find(params[:id])
+		
+		erb :'/figures/show'
+	end
+
+
+  	get '/figures/:id/edit' do
+
+	    @figure = Figure.find(params[:id])
+	    @titles = Title.all
+	    @landmarks = Landmark.all
+
+	    erb :'figures/edit'
+  	end
+
+
 
 end

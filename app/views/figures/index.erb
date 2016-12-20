@@ -1,0 +1,19 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta charset="UTF-8">
+    <title>Figure List Page</title>
+  </head>
+  <body>
+ 
+  <ul>
+      <% @figures.each do |figure| %>
+        <li>
+          <a href="/figures/<%=figure.id %>"><%= figure.name %></a>
+        </li>
+      <% end %>
+    </ul>
+
+
+  </body>
+</html>
